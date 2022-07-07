@@ -54,15 +54,15 @@ FILEPATH=""
 BASE_SCAN_TOPIC="/base_scan/throttled"
 OUTPUT_DIR=""
 
-while getopts "p:b:d:" o; do
-    case "${o}" in
+while getopts "p:b:o:" OPT; do
+    case "${OPT}" in
         p)
-            FILEPATH="${OPTARG}/*"
+            FILEPATH="${OPTARG}"
             ;;
         b)
             BASE_SCAN_TOPIC="{OPTARG}"
             ;;
-        d)
+        o)
             OUTPUT_DIR="${OPTARG}"
             # Currently it does not work correctly
             ;;
