@@ -15,10 +15,10 @@ function make_map()
     # done
     echo ${BASE_SCAN_TOPIC}
     echo ${file}
-    rosrun gmapping slam_gmapping scan:=${BASE_SCAN_TOPIC} map:=map_diff &
+    rosrun gmapping slam_gmapping scan:=${BASE_SCAN_TOPIC} map:=map_diff _odom_frame:=/map _map_frame:=/dummy_map &
     echo "=========gmapping"
     sleep 3
-
+    echo ${file}
     rosbag play --clock $file &&
         ROSBAG_PLAY_RESULT=$?
     echo "=================rosbag"
