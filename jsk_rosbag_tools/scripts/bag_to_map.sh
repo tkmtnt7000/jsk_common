@@ -5,6 +5,7 @@ usage() { echo "Usage: $0 [-p rosbag file directory ] [-b base scan topic ] [-d 
 function make_map()
 {
 
+    rosparam set use_sim_time true
     FILENAME=$(basename "$file" .bag)
     # TOPIC_LIST=$(rostopic list)
     # for topic in ${TOPIC_LIST}; do
