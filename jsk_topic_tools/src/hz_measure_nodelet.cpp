@@ -43,6 +43,7 @@ namespace jsk_topic_tools
 {
   void HzMeasure::onInit()
   {
+    bool input_flag = false;
     pnh_ = getPrivateNodeHandle();
     if (!pnh_.getParam("message_num", average_message_num_)) {
       average_message_num_ = 10; // defaults to 10
@@ -74,6 +75,7 @@ namespace jsk_topic_tools
 
   void HzMeasure::inputCallback(const boost::shared_ptr<topic_tools::ShapeShifter const>& msg)
   {
+    input_flag = true;
     ros::Time now = ros::Time::now();
     buffer_.push(now);
     if (buffer_.size() > average_message_num_) {
@@ -94,11 +96,11 @@ namespace jsk_topic_tools
     diagnostic_updater::DiagnosticStatusWrapper &stat)
   {
     double hz = -1.0;
-    if (buffer_.size() > average_message_num_) {
+    if (input_flag)  {
       ros::Time now = ros::Time::now();
       ros::Time oldest = buffer_.front();
       double whole_time = (now - oldest).toSec();
-      double average_time = whole_time / (buffer_.size() - 1);
+      double average_time = whole_time / buffer_.size();
       hz = 1.0 / average_time;
     }
     if (hz > 0.0) {
@@ -116,6 +118,7 @@ namespace jsk_topic_tools
                    (boost::format("%s is waiting input topic.")
                     % getName()).str());
     }
+    input_flag = false;
   }
 }
 

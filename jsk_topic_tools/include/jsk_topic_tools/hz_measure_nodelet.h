@@ -51,6 +51,7 @@ namespace jsk_topic_tools
     typedef ros::MessageEvent<topic_tools::ShapeShifter> ShapeShifterEvent;
     virtual void onInit();
   protected:
+    bool input_flag;
     int average_message_num_;
     double warning_hz_;
     std::queue<ros::Time> buffer_;
